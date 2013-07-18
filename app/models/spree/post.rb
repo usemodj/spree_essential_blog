@@ -28,7 +28,7 @@ class Spree::Post < ActiveRecord::Base
   scope :past,    where("posted_at <= ?", Time.now).ordered
   scope :live,    where(:live => true )
 
- 	before_validation :create_path, :if => proc{ |record| record.title_changed? }
+ 	before_validation :create_path #, :if => proc{ |record| record.title_changed? }
   
   
   # Creates date-part accessors for the posted_at timestamp for grouping purposes.
