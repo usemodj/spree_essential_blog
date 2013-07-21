@@ -1,6 +1,7 @@
 Spree::Core::Engine.routes.append do
   
-  scope(:module => "blogs") do
+  #scope(:module => "blogs") do
+  scope module: 'spree' do
 
     namespace :admin do
       

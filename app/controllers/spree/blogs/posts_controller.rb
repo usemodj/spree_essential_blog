@@ -7,7 +7,7 @@ class Spree::Blogs::PostsController < Spree::BaseController
   before_filter :get_sidebar, :only => [:index, :search, :show]
   
   def index
-    @posts_by_month = default_scope.limit(50).group_by { |post| post.posted_at.strftime("%B %Y") }
+    @posts_by_month = default_scope.order('posted_at DESC').limit(50).group_by { |post| post.posted_at.strftime("%B %Y") }
     scope = default_scope
     if params[:year].present?
       year  = params[:year].to_i
@@ -27,7 +27,7 @@ class Spree::Blogs::PostsController < Spree::BaseController
           stop = start + 1.day
         end
       end    
-      scope = scope.where("posted_at >= ? AND posted_at <= ?", start, stop)
+      scope = scope.where("posted_at >= ? AND posted_at <= ?", start, stop).order('posted_at DESC')
     end
     @posts = scope.page(params[:page]).per(Spree::Post.per_page)
   end
