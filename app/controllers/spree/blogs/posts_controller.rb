@@ -8,7 +8,7 @@ class Spree::Blogs::PostsController < Spree::BaseController
   
   def index
     @posts_by_month = default_scope.order('posted_at DESC').limit(50).group_by { |post| post.posted_at.strftime("%B %Y") }
-    scope = default_scope
+    scope = default_scope.order('posted_at DESC')
     if params[:year].present?
       year  = params[:year].to_i
       month = 1
@@ -27,14 +27,14 @@ class Spree::Blogs::PostsController < Spree::BaseController
           stop = start + 1.day
         end
       end    
-      scope = scope.where("posted_at >= ? AND posted_at <= ?", start, stop).order('posted_at DESC')
+      scope = scope.where("posted_at >= ? AND posted_at <= ?", start, stop)
     end
     @posts = scope.page(params[:page]).per(Spree::Post.per_page)
   end
-  
+  # tag search
   def search
 		query = params[:query].gsub(/%46/, '.')	
-		@posts = default_scope.tagged_with(query).page(params[:page]).per(Spree::Post.per_page)
+		@posts = default_scope.tagged_with(query).order('posted_at DESC').page(params[:page]).per(Spree::Post.per_page)
 		get_tags		
 		render :template => 'spree/blogs/posts/index'
 	end

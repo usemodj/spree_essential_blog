@@ -82,7 +82,7 @@ class Spree::Post < ActiveRecord::Base
     def create_path
   		count = 2
       #new_path = title.to_s.parameterize
-      new_path = title.to_s.to_url
+      new_path = title.to_s.to_url.parameterize
   		exists = path_exists?(new_path)
   		while exists do
   			dupe_path = "#{new_path}-#{count}"

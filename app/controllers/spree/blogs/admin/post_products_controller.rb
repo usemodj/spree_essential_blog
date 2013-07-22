@@ -19,8 +19,8 @@ class Spree::Blogs::Admin::PostProductsController < Spree::Admin::BaseController
   private
   
     def load_data
-	  	#@post = Spree::Post.find_by_path(params[:post_id])
-      @post = Spree::Post.find(params[:post_id])
+	  	@post = Spree::Post.find_by_path(params[:post_id])
+      #@post = Spree::Post.find(params[:post_id])
     end
 
 end
